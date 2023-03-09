@@ -21,7 +21,7 @@ function App() {
 
   async function getNFTsForOwner() {
     const config = {
-      apiKey: 'Kj-T8wthkP6qDeOpZrIxL7lxRQ-t0Qzz',
+      apiKey: '',
       network: Network.ETH_MAINNET,
     };
 
