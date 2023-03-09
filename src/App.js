@@ -9,15 +9,12 @@ import { H1, H4, P } from './components/Typography.js';
 import { Container } from './components/Container.js';
 import { ProjectCard } from './components/ProjectCard.js';
 import { Button } from './components/Button.js';
-// import useModal from './components/useModal.js';
-// import Modal from './components/Modal.js';
 
 function App() {
   const [userAddress, setUserAddress] = useState('');
   const [results, setResults] = useState([]);
   const [hasQueried, setHasQueried] = useState(false);
   const [tokenDataObjects, setTokenDataObjects] = useState([]);
-  // const { toggle, visible } = useModal();
 
   async function getNFTsForOwner() {
     const config = {
@@ -110,20 +107,21 @@ function App() {
               mb: '704px',
             }}
           >
-            {/* <button onClick={toggle}>Show Modal</button> */}
-
             {results.ownedNfts.map((e, i) => {
               return (
                 <div key={e.id}>
-                  <ProjectCard image={tokenDataObjects[i].rawMetadata.image}>
+                  <ProjectCard
+                    // image={tokenDataObjects[i].rawMetadata.image}
+                    description={
+                      tokenDataObjects[i].contract.openSea.description
+                    }
+                    externalUrl={
+                      tokenDataObjects[i].contract.openSea.externalUrl
+                    }
+                    image={tokenDataObjects[i].contract.openSea.imageUrl}
+                  >
                     <b>Name:</b> {tokenDataObjects[i].title}&nbsp;
                   </ProjectCard>
-
-                  {/* <Modal
-                    visible={visible}
-                    toggle={toggle}
-                    name={tokenDataObjects[i].title}
-                  ></Modal> */}
                 </div>
               );
             })}
