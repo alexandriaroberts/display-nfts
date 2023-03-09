@@ -2,7 +2,7 @@
 /** @jsxRuntime classic */
 import { jsx } from 'theme-ui';
 
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import { P } from '../components/Typography.js';
 
 export const ProjectCard = ({
