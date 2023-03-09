@@ -5,23 +5,23 @@ import { jsx } from 'theme-ui';
 import { Alchemy, Network } from 'alchemy-sdk';
 import { useState } from 'react';
 
-import { H1, H4, P, P16 } from './components/Typography.js';
+import { H1, H4, P } from './components/Typography.js';
 import { Container } from './components/Container.js';
 import { ProjectCard } from './components/ProjectCard.js';
 import { Button } from './components/Button.js';
-import useModal from './components/useModal.js';
-import Modal from './components/Modal.js';
+// import useModal from './components/useModal.js';
+// import Modal from './components/Modal.js';
 
 function App() {
   const [userAddress, setUserAddress] = useState('');
   const [results, setResults] = useState([]);
   const [hasQueried, setHasQueried] = useState(false);
   const [tokenDataObjects, setTokenDataObjects] = useState([]);
-  const { toggle, visible } = useModal();
+  // const { toggle, visible } = useModal();
 
   async function getNFTsForOwner() {
     const config = {
-      apiKey: '',
+      apiKey: 'Kj-T8wthkP6qDeOpZrIxL7lxRQ-t0Qzz',
       network: Network.ETH_MAINNET,
     };
 
@@ -110,7 +110,7 @@ function App() {
               mb: '704px',
             }}
           >
-            <button onClick={toggle}>Show Modal</button>
+            {/* <button onClick={toggle}>Show Modal</button> */}
 
             {results.ownedNfts.map((e, i) => {
               return (
@@ -119,11 +119,11 @@ function App() {
                     <b>Name:</b> {tokenDataObjects[i].title}&nbsp;
                   </ProjectCard>
 
-                  <Modal
+                  {/* <Modal
                     visible={visible}
                     toggle={toggle}
                     name={tokenDataObjects[i].title}
-                  ></Modal>
+                  ></Modal> */}
                 </div>
               );
             })}

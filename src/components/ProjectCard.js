@@ -11,9 +11,7 @@ export const ProjectCard = ({
   children,
   visible,
   toggle,
-  // description,
-  // address,
-  // externalUrl,
+
   ...props
 }) => (
   <div onClick={toggle}>
