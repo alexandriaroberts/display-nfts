@@ -52,7 +52,7 @@ function App() {
         </div>
       </div>
       <div sx={{ mt: '64px' }}>
-        <H4>Get all the ERC-21 tokens of this address:</H4>
+        <H4>Get all the ERC-721 tokens of this address:</H4>
         <div
           sx={{
             display: 'flex',
