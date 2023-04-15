@@ -15,8 +15,10 @@ function App() {
   const [results, setResults] = useState([]);
   const [hasQueried, setHasQueried] = useState(false);
   const [tokenDataObjects, setTokenDataObjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getNFTsForOwner() {
+    setIsLoading(true);
     const config = {
       apiKey: process.env.API_KEY,
       network: Network.ETH_MAINNET,
@@ -38,9 +40,10 @@ function App() {
     }
 
     setTokenDataObjects(await Promise.all(tokenDataPromises));
+    setIsLoading(false);
     setHasQueried(true);
   }
-  console.log(results);
+
   return (
     <Container>
       <div sx={{ mt: '164px' }}>
@@ -89,6 +92,43 @@ function App() {
           />
           <Button onClick={getNFTsForOwner}>Fetch NFTs</Button>
         </div>
+        {isLoading && (
+          <div
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              animation: 'spin  5s infinite',
+              transform: 'rotate(30deg)',
+              mt: ['64px', '164px'],
+              '@keyframes spin': {
+                '0%': {
+                  transform: 'translateY(0px)',
+                },
+                '20%': {
+                  transform: 'translateY(-5px)',
+                },
+                '30%': {
+                  transform: 'translateY(0px)',
+                },
+                '40%': {
+                  transform: 'translateY(-5px)',
+                },
+                '70%': {
+                  transform: 'translateY(0px)',
+                },
+                '100%': {
+                  transform: 'translateY(-5px)',
+                },
+              },
+            }}
+          >
+            <img
+              src='../reshot-icon-rocket-9NEHTDUPRS.svg'
+              alt=''
+              sx={{ width: '150px' }}
+            />
+          </div>
+        )}
 
         {hasQueried ? (
           <div
@@ -111,7 +151,6 @@ function App() {
               return (
                 <div key={e.id}>
                   <ProjectCard
-                    // image={tokenDataObjects[i].rawMetadata.image}
                     description={
                       tokenDataObjects[i].contract.openSea.description
                     }
@@ -126,11 +165,7 @@ function App() {
               );
             })}
           </div>
-        ) : (
-          <P sx={{ mt: '8px' }}>
-            Please make a query! The query may take a few seconds...
-          </P>
-        )}
+        ) : null}
       </div>
     </Container>
   );
