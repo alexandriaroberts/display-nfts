@@ -46,52 +46,72 @@ function App() {
 
   return (
     <Container>
-      <div sx={{ mt: '164px' }}>
-        <div>
-          <H1>Nft's from address</H1>
-          <P>
-            Plug in an address and this website will return all of its NFTs!
-          </P>
-        </div>
-      </div>
-      <div sx={{ mt: '64px' }}>
-        <H4>Get all the ERC-721 tokens of this address:</H4>
+      <div>
         <div
           sx={{
-            display: 'flex',
-            flexDirection: ['column', null, 'row'],
-            gap: ['16px', null, '32px'],
-            mt: '16px',
+            my: '164px',
+            display: 'grid',
+            gridTemplateColumns: ['1fr', null, '1fr 1fr'],
+            columnGap: '64px',
           }}
         >
-          <input
-            placeholder='Enter wallet Address'
-            onChange={(e) => setUserAddress(e.target.value)}
+          <div sx={{ gridColumn: 1 }}>
+            <H1>Nft's from address</H1>
+            <P>
+              Plug in an address and this website will return all of its NFTs!
+            </P>
+            <div sx={{ mt: '64px' }}>
+              <H4>Get all the ERC-721 tokens of this address:</H4>
+              <div
+                sx={{
+                  display: 'flex',
+                  flexDirection: ['column', null, 'row'],
+                  gap: ['16px', null, '32px'],
+                  mt: '16px',
+                }}
+              >
+                <input
+                  placeholder='Enter wallet Address'
+                  onChange={(e) => setUserAddress(e.target.value)}
+                  sx={{
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    borderColor: 'secondaryOrange',
+                    borderRadius: '4px',
+                    width: '100%',
+                    maxWidth: '604px',
+                    height: '52px',
+                    outline: 'none',
+                    fontFamily: 'Noto Serif',
+                    fontSize: ['16px', null, '20px'],
+                    fontStyle: 'normal',
+                    fontWeight: '500',
+                    lineHeight: ['28px', null, '37px'],
+                    letterSpacing: '2px',
+                    pl: '8px',
+                    '&:focus-visible, &:hover, &:active': {
+                      color: 'text',
+                      borderColor: 'primary',
+                    },
+                    transition: 'all 0.3s ease',
+                  }}
+                />
+                <Button onClick={getNFTsForOwner}>Fetch NFTs</Button>
+              </div>
+            </div>
+          </div>
+          <div
             sx={{
-              borderWidth: '1px',
-              borderStyle: 'solid',
-              borderColor: 'secondaryOrange',
-              borderRadius: '4px',
-              width: '100%',
-              maxWidth: '604px',
-              height: '52px',
-              outline: 'none',
-              fontFamily: 'Noto Serif',
-              fontSize: ['16px', null, '20px'],
-              fontStyle: 'normal',
-              fontWeight: '500',
-              lineHeight: ['28px', null, '37px'],
-              letterSpacing: '2px',
-              pl: '8px',
-              '&:focus-visible, &:hover, &:active': {
-                color: 'text',
-                borderColor: 'primary',
-              },
-              transition: 'all 0.3s ease',
+              gridColumn: 2,
+              height: '100%',
+              backgroundImage: `url('../punk.avif')`,
+              backgroundSize: '100% 100%',
+              display: ['none', 'block'],
+              objectFit: 'cover',
             }}
           />
-          <Button onClick={getNFTsForOwner}>Fetch NFTs</Button>
         </div>
+
         {isLoading && (
           <div
             sx={{

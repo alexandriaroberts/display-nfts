@@ -17,11 +17,10 @@ export const Button = ({ onClick, counter, children, ...props }) => {
         border: 'none',
         backgroundColor: 'text',
         padding: ['18px 20px', '8px 16px'],
-        maxWidth: '100%',
+        width: ['100%', null, '220px'],
         boxShadow: 'none',
         cursor: onClick != null ? 'pointer' : 'default',
-        overflowWrap: 'break-word',
-        inlineSize: ['100%', null, '165px'],
+        whiteSpace: 'nowrap',
         '&:hover ': {
           backgroundColor: '#223F00',
         },
