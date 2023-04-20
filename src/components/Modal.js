@@ -16,24 +16,36 @@ const Modal = ({ visible, toggle, image, description, externalUrl }) =>
             aria-modal='true'
             sx={{
               background: '#fff',
-              border: ' 2px solid #aaa',
+              border: '2px solid #aaa',
               borderRadius: '5px',
               zIndex: 999,
-              maxWidth: 'auto',
-              height: '100%',
-              //   margin: '32px',
-              padding: '1em 2em 2em',
+              margin: [0, null, '32px'],
+              padding: ['1em', null, '1em 2em 2em'],
               position: 'fixed',
-              inset: 0,
-              display: 'flex',
-              gap: '16px',
+              top: 0,
+              bottom: 0,
+              display: 'grid',
+              gridTemplateColumns: '0.9fr 0.1fr',
             }}
           >
-            <div sx={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div
+              sx={{
+                gridColumn: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '16px',
+              }}
+            >
               <img
                 src={image}
                 alt=''
-                sx={{ objectFit: 'contain', aspectRatio: '2 / 1', mb: '32px' }}
+                sx={{
+                  objectFit: 'contain',
+                  width: ['200px', null, '380px'],
+                  aspectRatio: '1',
+                  mb: '32px',
+                  mx: 'auto',
+                }}
               />
               <H5>Info:</H5>
               <P>{description}</P>
@@ -46,9 +58,15 @@ const Modal = ({ visible, toggle, image, description, externalUrl }) =>
                   color: 'text',
                   p: '8px 10px',
                   borderRadius: '4px',
-                  maxWidth: '100px',
+                  maxWidth: '85px',
                   textDecoration: 'none',
+                  cursor: 'pointer',
                   mt: '32px',
+                  '&:hover ': {
+                    backgroundColor: '#223F00',
+                    color: 'background',
+                  },
+                  transition: 'all 0.3s ease',
                 }}
               >
                 Buy Now
@@ -57,7 +75,12 @@ const Modal = ({ visible, toggle, image, description, externalUrl }) =>
             <button
               type='button'
               onClick={toggle}
-              sx={{ display: 'flex', fontSize: '20px' }}
+              sx={{
+                gridColumn: 2,
+                display: 'flex',
+                justifySelf: 'right',
+                fontSize: '20px',
+              }}
             >
               X
             </button>

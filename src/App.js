@@ -49,10 +49,10 @@ function App() {
       <div>
         <div
           sx={{
-            my: '164px',
+            my: ['64px', null, '164px'],
             display: 'grid',
             gridTemplateColumns: ['1fr', null, '1fr 1fr'],
-            columnGap: '64px',
+            columnGap: ['32px', '64px'],
           }}
         >
           <div sx={{ gridColumn: 1 }}>
@@ -161,10 +161,10 @@ function App() {
                 'repeat(auto-fit, minmax(300px, 1fr))',
               ],
 
-              gap: '64px',
+              gap: ['32px', null, '64px'],
               textAlign: 'center',
               mt: ['64px', null, '104px'],
-              mb: '704px',
+              mb: ['64px', null, '164px'],
             }}
           >
             {results.ownedNfts.map((e, i) => {
