@@ -9,6 +9,7 @@ import { H1, H4, P } from './components/Typography.js';
 import { Container } from './components/Container.js';
 import { ProjectCard } from './components/ProjectCard.js';
 import { Button } from './components/Button.js';
+import { Gallery } from './components/Gallery.js'; // Import the new Gallery component
 
 function App() {
   const [userAddress, setUserAddress] = useState('');
@@ -35,7 +36,6 @@ function App() {
         data.ownedNfts[i].contract.address,
         data.ownedNfts[i].tokenId
       );
-
       tokenDataPromises.push(tokenData);
     }
 
@@ -44,24 +44,39 @@ function App() {
     setHasQueried(true);
   }
 
+  // Format NFT data for the Gallery component
+  const nfts = results.ownedNfts?.map((e, i) => ({
+    image:
+      tokenDataObjects[i]?.media[0]?.gateway ||
+      'https://via.placeholder.com/300',
+    name: tokenDataObjects[i]?.title || 'Untitled',
+    description:
+      tokenDataObjects[i]?.description || 'No description available.',
+    chain: 'Ethereum', // Hardcoded for now, we'll update this later for multi-chain support
+    externalUrl: tokenDataObjects[i]?.contract.openSea?.externalUrl || '#',
+  }));
+
   return (
     <Container>
       <div>
+        {/* Enhanced Hero Area */}
         <div
           sx={{
             my: ['64px', null, '164px'],
             display: 'grid',
             gridTemplateColumns: ['1fr', null, '1fr 1fr'],
             columnGap: ['32px', '64px'],
+            alignItems: 'center',
           }}
         >
           <div sx={{ gridColumn: 1 }}>
-            <H1>Nft's from address</H1>
+            <H1>Discover Your NFTs</H1>
             <P>
-              Plug in an address and this website will return all of its NFTs!
+              Enter your wallet address to explore all your NFTs across multiple
+              chains.
             </P>
             <div sx={{ mt: '64px' }}>
-              <H4>Get all the ERC-721 tokens of this address:</H4>
+              <H4>Enter your wallet address:</H4>
               <div
                 sx={{
                   display: 'flex',
@@ -71,13 +86,13 @@ function App() {
                 }}
               >
                 <input
-                  placeholder='Enter wallet Address'
+                  placeholder='0x...'
                   onChange={(e) => setUserAddress(e.target.value)}
                   sx={{
                     borderWidth: '1px',
                     borderStyle: 'solid',
                     borderColor: 'secondaryOrange',
-                    borderRadius: '4px',
+                    borderRadius: '8px',
                     width: '100%',
                     maxWidth: '604px',
                     height: '52px',
@@ -88,10 +103,10 @@ function App() {
                     fontWeight: '500',
                     lineHeight: ['28px', null, '37px'],
                     letterSpacing: '2px',
-                    pl: '8px',
+                    pl: '16px',
                     '&:focus-visible, &:hover, &:active': {
-                      color: 'text',
                       borderColor: 'primary',
+                      boxShadow: '0 0 0 2px rgba(255, 165, 0, 0.3)',
                     },
                     transition: 'all 0.3s ease',
                   }}
@@ -105,87 +120,44 @@ function App() {
               gridColumn: 2,
               height: '100%',
               backgroundImage: `url('../punk.avif')`,
-              backgroundSize: '100% 100%',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              borderRadius: '16px',
               display: ['none', 'block'],
-              objectFit: 'cover',
+              minHeight: '400px',
+              boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
             }}
           />
         </div>
 
+        {/* Loading Animation */}
         {isLoading && (
           <div
             sx={{
               display: 'flex',
               justifyContent: 'center',
-              animation: 'spin  5s infinite',
-              transform: 'rotate(30deg)',
               mt: ['64px', '164px'],
-              '@keyframes spin': {
-                '0%': {
-                  transform: 'translateY(0px)',
-                },
-                '20%': {
-                  transform: 'translateY(-5px)',
-                },
-                '30%': {
-                  transform: 'translateY(0px)',
-                },
-                '40%': {
-                  transform: 'translateY(-5px)',
-                },
-                '70%': {
-                  transform: 'translateY(0px)',
-                },
-                '100%': {
-                  transform: 'translateY(-5px)',
-                },
-              },
             }}
           >
             <img
               src='../reshot-icon-rocket-9NEHTDUPRS.svg'
-              alt=''
-              sx={{ width: '150px' }}
+              alt='Loading...'
+              sx={{ width: '150px', animation: 'spin 2s infinite linear' }}
             />
           </div>
         )}
 
-        {hasQueried ? (
+        {/* Display NFTs */}
+        {hasQueried && (
           <div
-            sx={{
-              display: 'grid',
-              gridTemplateColumns: [
-                '1fr',
-                'repeat(auto-fill, minmax(min(259px, 100%), 1fr))',
-                null,
-                'repeat(auto-fit, minmax(300px, 1fr))',
-              ],
-
-              gap: ['32px', null, '64px'],
-              textAlign: 'center',
-              mt: ['64px', null, '104px'],
-              mb: ['64px', null, '164px'],
-            }}
+            sx={{ mt: ['64px', null, '104px'], mb: ['64px', null, '164px'] }}
           >
-            {results.ownedNfts.map((e, i) => {
-              return (
-                <div key={e.id}>
-                  <ProjectCard
-                    description={
-                      tokenDataObjects[i].contract.openSea.description
-                    }
-                    externalUrl={
-                      tokenDataObjects[i].contract.openSea.externalUrl
-                    }
-                    image={tokenDataObjects[i].contract.openSea.imageUrl}
-                  >
-                    <b>Name:</b> {tokenDataObjects[i].title}&nbsp;
-                  </ProjectCard>
-                </div>
-              );
-            })}
+            <H4 sx={{ textAlign: 'center', mb: '32px' }}>
+              Your NFT Collection
+            </H4>
+            <Gallery nfts={nfts} />
           </div>
-        ) : null}
+        )}
       </div>
     </Container>
   );

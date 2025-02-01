@@ -1,71 +1,75 @@
 /** @jsx jsx */
 /** @jsxRuntime classic */
 import { jsx } from 'theme-ui';
-
-// import ReactDOM from 'react-dom';
-import { P } from '../components/Typography.js';
+import { P, H5 } from '../components/Typography.js';
 import useModal from '../components/useModal.js';
 import Modal from '../components/Modal.js';
 
 export const ProjectCard = ({
   href,
   image,
+  name,
   description,
   externalUrl,
+  chain, // New prop to indicate the chain
   children,
   ...props
 }) => {
   const { toggle, visible } = useModal();
+
   return (
-    <div>
+    <div sx={{ position: 'relative', cursor: 'pointer' }}>
       <div onClick={toggle}>
         <a
           href={href}
           target='_blank'
           rel='noreferrer'
-          sx={{ textDecoration: 'none', color: 'text', cursor: 'pointer' }}
+          sx={{ textDecoration: 'none', color: 'text' }}
         >
           <div
             sx={{
-              mb: ['8px'],
+              mb: '8px',
               aspectRatio: '1',
               overflow: 'hidden',
-              pointerEvents: 'none',
-              boxShadow: 'rgb(0 0 0 / 8%) 0px 4px 15px',
+              borderRadius: '8px',
+              boxShadow: '0 4px 15px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                boxShadow: '0 8px 20px rgba(0, 0, 0, 0.2)',
+              },
             }}
             {...props}
           >
             <img
               src={image}
-              alt=''
+              alt={name}
               sx={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
                 width: '100%',
                 height: '100%',
-                objectFit: 'contain',
-                aspectRatio: 1,
-                borderRadius: '4px',
-                'a:hover &': {
-                  transform: `scale(1.02)`,
-                },
-                transition: 'all 0.3s ease',
+                objectFit: 'cover',
+                borderRadius: '8px',
               }}
             />
           </div>
-          <P
-            sx={{
-              mt: '16px',
-              opacity: 0.8,
-              'a:hover &': {
-                opacity: 1,
-              },
-              transition: 'all 0.3s ease',
-            }}
-          >
-            {children}
-          </P>
+          <H5 sx={{ mt: '12px', mb: '4px', fontWeight: 600 }}>{name}</H5>
+          <P sx={{ opacity: 0.8, fontSize: '14px' }}>{description}</P>
+          {chain && (
+            <div
+              sx={{
+                position: 'absolute',
+                top: '8px',
+                right: '8px',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                color: 'white',
+                padding: '4px 8px',
+                borderRadius: '4px',
+                fontSize: '12px',
+              }}
+            >
+              {chain}
+            </div>
+          )}
         </a>
       </div>
       <Modal
